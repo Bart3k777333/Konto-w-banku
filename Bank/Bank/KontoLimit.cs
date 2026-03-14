@@ -2,15 +2,17 @@
 
 namespace Bank;
 
-public class KontoPlus : Konto
+public class KontoLimit
 {
+    private Konto konto;
+
     private decimal limit;
     private decimal debet = 0;
-    private bool limitWykorzystany = false;
+    private bool limitWykorzystany;
 
-    public KontoPlus(string klient, decimal bilansNaStart = 0, decimal limit = 100)
-        : base(klient, bilansNaStart)
+    public KontoLimit(string klient, decimal bilansNaStart = 0, decimal limit = 100)
     {
+        this.konto = new Konto(klient, bilansNaStart);
         Limit = limit;
     }
 
@@ -28,25 +30,35 @@ public class KontoPlus : Konto
         }
     }
 
-    public override decimal Bilans
+    public string Nazwa => konto.Nazwa;
+
+    public bool Zablokowane => konto.Zablokowane;
+
+    public decimal Bilans
     {
         get
         {
             if (Zablokowane)
-            {
                 return 0;
-            }
 
             if (limitWykorzystany)
-            {
-                return base.Bilans;
-            }
+                return konto.Bilans;
 
-            return base.Bilans + limit;
+            return konto.Bilans + limit;
         }
     }
 
-    public override void Wplata(decimal kwota)
+    public void BlokujKonto()
+    {
+        konto.BlokujKonto();
+    }
+
+    public void OdblokujKonto()
+    {
+        konto.OdblokujKonto();
+    }
+
+    public void Wplata(decimal kwota)
     {
         if (kwota <= 0)
         {
@@ -69,10 +81,10 @@ public class KontoPlus : Konto
 
                 if (reszta > 0)
                 {
-                    base.Wplata(reszta);
+                    konto.Wplata(reszta);
                 }
 
-                if (base.Bilans > 0)
+                if (konto.Bilans > 0)
                 {
                     limitWykorzystany = false;
                 }
@@ -85,7 +97,7 @@ public class KontoPlus : Konto
         }
         else
         {
-            base.Wplata(kwota);
+            konto.Wplata(kwota);
         }
 
         if (debet > 0 && byloZablokowane)
@@ -94,7 +106,7 @@ public class KontoPlus : Konto
         }
     }
 
-    public override void Wyplata(decimal kwota)
+    public void Wyplata(decimal kwota)
     {
         if (Zablokowane)
         {
@@ -106,9 +118,9 @@ public class KontoPlus : Konto
             throw new ArgumentOutOfRangeException("Wypłacana kwota musi być większa od zera.");
         }
 
-        if (kwota <= base.Bilans)
+        if (kwota <= konto.Bilans)
         {
-            base.Wyplata(kwota);
+            konto.Wyplata(kwota);
         }
         else
         {
@@ -117,21 +129,20 @@ public class KontoPlus : Konto
                 throw new InvalidOperationException("Jednorazowy limit debetowy został już wykorzystany.");
             }
 
-            decimal brakujacaKwota = kwota - base.Bilans;
+            decimal brakujacaKwota = kwota - konto.Bilans;
 
             if (brakujacaKwota > limit)
             {
                 throw new InvalidOperationException("Kwota wypłaty przekracza Twój jednorazowy limit debetowy.");
             }
 
-            if (base.Bilans > 0)
+            if (konto.Bilans > 0)
             {
-                base.Wyplata(base.Bilans);
+                konto.Wyplata(konto.Bilans);
             }
 
             debet = brakujacaKwota;
             limitWykorzystany = true;
-
             BlokujKonto();
         }
     }

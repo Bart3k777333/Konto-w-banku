@@ -10,7 +10,6 @@ public class Konto
 
     private Konto()
     {
-
     }
 
     public Konto(string klient, decimal bilansNaStart = 0)
@@ -67,7 +66,7 @@ public class Konto
 
         if (kwota <= 0)
         {
-            throw new ArgumentOutOfRangeException("Wpłacana kwota musi być większa od zera.");
+            throw new ArgumentOutOfRangeException("Wypłacana kwota musi być większa od zera.");
         }
 
         if (kwota > bilans)
