@@ -78,4 +78,12 @@ public class KontoTests
         konto.Wyplata(50);
         Assert.AreEqual(50, konto.Bilans);
     }
+
+    [TestMethod]
+    public void Wyplata_Ujemna_Lub_Zerowa_Kwota_Wyrzuca_ArgumentOutOfRangeException()
+    {
+        var konto = new Konto("Jan", 100);
+        Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wyplata(0));
+        Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wyplata(-10));
+    }
 }
