@@ -86,4 +86,19 @@ public class KontoTests
         Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wyplata(0));
         Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wyplata(-10));
     }
+
+    [TestMethod]
+    public void Wyplata_Konto_Zablokowane_WyrzucaInvalidOperationException()
+    {
+        var konto = new Konto("Jan", 100);
+        konto.BlokujKonto();
+        Assert.Throws<InvalidOperationException>(() => konto.Wyplata(50));
+    }
+
+    [TestMethod]
+    public void Wyplata_Brak_Srodkow_Wyrzuca_InvalidOperationException()
+    {
+        var konto = new Konto("Jan", 100);
+        Assert.Throws<InvalidOperationException>(() => konto.Wyplata(101));
+    }
 }
