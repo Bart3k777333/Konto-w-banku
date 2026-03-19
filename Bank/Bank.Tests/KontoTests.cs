@@ -39,5 +39,11 @@ public class KontoTests
     }
 
     [TestMethod]
-    
+    public void Odblokuj_Konto_Zmienia_Status_Na_Odblokowane()
+    {
+        var konto = new Konto("Jan", 100);
+        konto.BlokujKonto();
+        konto.OdblokujKonto();
+        Assert.IsFalse(konto.Zablokowane);
+    }
 }
