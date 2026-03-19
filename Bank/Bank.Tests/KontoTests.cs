@@ -54,4 +54,12 @@ public class KontoTests
         konto.Wplata(50);
         Assert.AreEqual(150, konto.Bilans);
     }
+
+    [TestMethod]
+    public void Wplata_Ujemna_Lub_Zerowa_Kwota_Wyrzuca_ArgumentOutOfRangeException()
+    {
+        var konto = new Konto("Jan", 100);
+        Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wplata(0));
+        Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wplata(-10));
+    }
 }
