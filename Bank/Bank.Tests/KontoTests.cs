@@ -17,5 +17,14 @@ public class KontoTests
         Assert.IsFalse(konto.Zablokowane);
     }
 
-    
+    [TestMethod]
+    public void Konstruktor_Pusta_Nazwa_Klienta_Wyrzuc_ArgumentException()
+
+    {
+
+        Assert.Throws<ArgumentException>(() => new Konto(""));
+
+        Assert.Throws<ArgumentException>(() => new Konto(null));
+
+    }
 }
