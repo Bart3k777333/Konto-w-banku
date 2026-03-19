@@ -19,12 +19,14 @@ public class KontoTests
 
     [TestMethod]
     public void Konstruktor_Pusta_Nazwa_Klienta_Wyrzuc_ArgumentException()
-
     {
-
         Assert.Throws<ArgumentException>(() => new Konto(""));
-
         Assert.Throws<ArgumentException>(() => new Konto(null));
+    }
 
+    [TestMethod]
+    public void Konstruktor_Ujemny_Bilans_Na_Start_Wyrzuca_ArgumentOutOfRangeException()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => new Konto("Jan", -10));
     }
 }
