@@ -70,4 +70,12 @@ public class KontoTests
         konto.BlokujKonto();
         Assert.Throws<InvalidOperationException>(() => konto.Wplata(50));
     }
+
+    [TestMethod]
+    public void Wyplata_Prawidlowa_Kwota_Zmniejsza_Bilans()
+    {
+        var konto = new Konto("Jan", 100);
+        konto.Wyplata(50);
+        Assert.AreEqual(50, konto.Bilans);
+    }
 }
