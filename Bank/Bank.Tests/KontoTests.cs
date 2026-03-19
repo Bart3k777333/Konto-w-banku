@@ -29,4 +29,15 @@ public class KontoTests
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => new Konto("Jan", -10));
     }
+
+    [TestMethod]
+    public void Blokuj_Konto_Zmienia_Status_Na_Zablokowane()
+    {
+        var konto = new Konto("Jan", 100);
+        konto.BlokujKonto();
+        Assert.IsTrue(konto.Zablokowane);
+    }
+
+    [TestMethod]
+    
 }
