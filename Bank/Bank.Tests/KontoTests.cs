@@ -46,4 +46,12 @@ public class KontoTests
         konto.OdblokujKonto();
         Assert.IsFalse(konto.Zablokowane);
     }
+
+    [TestMethod]
+    public void Wplata_Prawidlowa_Kwota_Zwieksza_Bilans()
+    {
+        var konto = new Konto("Jan", 100);
+        konto.Wplata(50);
+        Assert.AreEqual(150, konto.Bilans);
+    }
 }
