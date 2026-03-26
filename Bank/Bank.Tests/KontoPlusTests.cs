@@ -13,4 +13,12 @@ public class KontoPlusTests
         var konto = new KontoPlus("Jan Kowalski", 100, 100);
         Assert.Throws<ArgumentOutOfRangeException>(() => konto.Limit = -50);
     }
+
+    [TestMethod]
+    public void Bilans_Gdy_Konto_Zablokowane_Zwraca_Zero()
+    {
+        var konto = new KontoPlus("Jan Kowalski", 100, 100);
+        konto.BlokujKonto();
+        Assert.AreEqual(0, konto.Bilans);
+    }
 }
