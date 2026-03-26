@@ -48,4 +48,16 @@ public class KontoPlusTests
         Assert.IsTrue(konto.Zablokowane);
         Assert.AreEqual(0, konto.Bilans);
     }
+
+    [TestMethod]
+    public void Wplata_Rowna_Debet_Odblokowuje_Ale_Limit_Nadal_Wykorzystany()
+    {
+        var konto = new KontoPlus("Jan Kowalski", 0, 100);
+
+        konto.Wyplata(50);
+        konto.Wplata(50);
+
+        Assert.IsFalse(konto.Zablokowane);
+        Assert.AreEqual(0, konto.Bilans);
+    }
 }
