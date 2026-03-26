@@ -29,4 +29,12 @@ public class KontoPlusTests
         Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wplata(0));
         Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wplata(-50));
     }
+
+    [TestMethod]
+    public void Wplata_Brak_Debetu_Zwieksza_Bilans()
+    {
+        var konto = new KontoPlus("Jan Kowalski", 100, 100);
+        konto.Wplata(50);
+        Assert.AreEqual(150, konto.Bilans);
+    }
 }
