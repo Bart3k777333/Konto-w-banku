@@ -72,4 +72,46 @@ public class KontoPlusTests
         Assert.IsFalse(konto.Zablokowane);
         Assert.AreEqual(110, konto.Bilans);
     }
+
+    [TestMethod]
+    public void Wyplata_Kwota_Ujemna_Lub_Zero_Wyrzuca_Wyjatek()
+    {
+        var konto = new KontoPlus("Jan Kowalski", 100, 100);
+        Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wyplata(0));
+        Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wyplata(-50));
+    }
+
+    [TestMethod]
+    public void Wyplata_Wejscie_W_Limit_Blokuje_Konto()
+    {
+        var konto = new KontoPlus("Jan Kowalski", 100, 100);
+        konto.Wyplata(150);
+        Assert.IsTrue(konto.Zablokowane);
+    }
+
+    [TestMethod]
+    public void Wyplata_Konto_Zablokowane_Wyrzuca_Wyjatek()
+    {
+        var konto = new KontoPlus("Jan Kowalski", 100, 100);
+        konto.BlokujKonto();
+        Assert.Throws<InvalidOperationException>(() => konto.Wyplata(50));
+    }
+
+    [TestMethod]
+    public void Wyplata_Przekroczenie_Limitu_Wyrzuca_Wyjatek()
+    {
+        var konto = new KontoPlus("Jan Kowalski", 50, 100);
+
+        Assert.Throws<InvalidOperationException>(() => konto.Wyplata(200));
+    }
+
+    [TestMethod]
+    public void Wyplata_Gdy_Limit_Juz_Wykorzystany_Wyrzuca_Wyjatek()
+    {
+        var konto = new KontoPlus("Jan Kowalski", 50, 100);
+        konto.Wyplata(100);
+        konto.Wplata(50);
+
+        Assert.Throws<InvalidOperationException>(() => konto.Wyplata(10));
+    }
 }
