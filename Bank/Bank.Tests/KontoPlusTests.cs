@@ -21,4 +21,12 @@ public class KontoPlusTests
         konto.BlokujKonto();
         Assert.AreEqual(0, konto.Bilans);
     }
+
+    [TestMethod]
+    public void Wplata_Kwota_Ujemna_Lub_Zero_Wyrzuca_Wyjatek()
+    {
+        var konto = new KontoPlus("Jan Kowlaski", 100, 100);
+        Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wplata(0));
+        Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wplata(-50));
+    }
 }
