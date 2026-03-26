@@ -37,4 +37,15 @@ public class KontoPlusTests
         konto.Wplata(50);
         Assert.AreEqual(150, konto.Bilans);
     }
+
+    [TestMethod]
+    public void Wplata_Mniejsza_Niz_Debet_Zmniejsza_Debet_Konto_Nadal_Zablokowane()
+    {
+        var konto = new KontoPlus("Jan Kowalski", 0, 100);
+        konto.Wyplata(50);
+        konto.Wplata(20);
+
+        Assert.IsTrue(konto.Zablokowane);
+        Assert.AreEqual(0, konto.Bilans);
+    }
 }
