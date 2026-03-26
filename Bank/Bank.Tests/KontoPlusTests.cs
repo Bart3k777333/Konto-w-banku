@@ -33,7 +33,7 @@ public class KontoPlusTests
     [TestMethod]
     public void Wplata_Brak_Debetu_Zwieksza_Bilans()
     {
-        var konto = new KontoPlus("Jan Kowalski", 100, 100);
+        var konto = new KontoPlus("Jan Kowalski", 0, 100);
         konto.Wplata(50);
         Assert.AreEqual(150, konto.Bilans);
     }
