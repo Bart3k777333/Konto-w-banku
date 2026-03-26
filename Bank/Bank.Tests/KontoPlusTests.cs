@@ -60,4 +60,16 @@ public class KontoPlusTests
         Assert.IsFalse(konto.Zablokowane);
         Assert.AreEqual(0, konto.Bilans);
     }
+
+    [TestMethod]
+    public void Wplata_Wieksza_Niz_Debet_Odblokowuje_I_Odnawia_Limit()
+    {
+        var konto = new KontoPlus("Jan Kowalski", 0, 100);
+
+        konto.Wyplata(50);
+        konto.Wplata(60);
+
+        Assert.IsFalse(konto.Zablokowane);
+        Assert.AreEqual(110, konto.Bilans);
+    }
 }
