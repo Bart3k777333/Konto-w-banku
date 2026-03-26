@@ -1,7 +1,7 @@
 ﻿using Bank;
 using System;
 
-Console.WriteLine("=== Test konta standardowego ===");
+Console.WriteLine("Test konta standardowego");
 
 Konto kontoPodstawowe = new Konto("Jan Kowalski", 200);
 Console.WriteLine($"Właściciel: {kontoPodstawowe.Nazwa}, Stan konta: {kontoPodstawowe.Bilans} zł");
@@ -14,7 +14,7 @@ Console.WriteLine("Test konta z debetem");
 KontoPlus kontoZDodatkiem = new KontoPlus("Anna Nowak", 50, 100);
 Console.WriteLine($"Właściciel: {kontoZDodatkiem.Nazwa}, Dostępne środki: {kontoZDodatkiem.Bilans} zł");
 
-Console.WriteLine("Wypłata 100 zł w toku...");
+Console.WriteLine("Wypłata 100 zł w toku");
 kontoZDodatkiem.Wyplata(100);
 
 Console.WriteLine($"Operacja zakończona. Dostępne środki: {kontoZDodatkiem.Bilans} zł");
