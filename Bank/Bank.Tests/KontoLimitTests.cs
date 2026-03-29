@@ -87,4 +87,13 @@ public class KontoLimitTests
         Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wyplata(0));
         Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wyplata(-10));
     }
+
+    [TestMethod]
+    public void Wyplata_Wejscie_W_Limit_Blokuje_Konto()
+    {
+        var konto = new KontoLimit("Piotr Nowak", 50, 100);
+        konto.Wyplata(100);
+
+        Assert.IsTrue(konto.Zablokowane);
+    }
 }
