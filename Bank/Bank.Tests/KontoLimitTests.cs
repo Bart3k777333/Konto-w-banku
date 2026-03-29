@@ -71,4 +71,12 @@ public class KontoLimitTests
         Assert.IsFalse(konto.Zablokowane);
         Assert.AreEqual(120, konto.Bilans);
     }
+
+    [TestMethod]
+    public void Wyplata_Konto_Zablokowane_Wyrzuca_Wyjatek()
+    {
+        var konto = new KontoLimit("Jan Kowalski", 100, 100);
+        konto.BlokujKonto();
+        Assert.Throws<InvalidOperationException>(() => konto.Wyplata(50));
+    }
 }
