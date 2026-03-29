@@ -30,4 +30,12 @@ public class KontoLimitTests
         Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wplata(-50));
         Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wplata(0));
     }
+
+    [TestMethod]
+    public void Wplata_Brak_Debetu_Zwieksza_Bilans()
+    {
+        var konto = new KontoLimit("Jan Kowalski", 0, 100);
+        konto.Wplata(50);
+        Assert.AreEqual(150, konto.Bilans);
+    }
 }
