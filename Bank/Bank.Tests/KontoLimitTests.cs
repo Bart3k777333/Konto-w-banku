@@ -79,4 +79,12 @@ public class KontoLimitTests
         konto.BlokujKonto();
         Assert.Throws<InvalidOperationException>(() => konto.Wyplata(50));
     }
+
+    [TestMethod]
+    public void Wyplata_Kwota_Ujemna_Lub_Zero_Wyrzuca_Wyjatek()
+    {
+        var konto = new KontoLimit("Jan Kowalski", 100, 100);
+        Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wyplata(0));
+        Assert.Throws<ArgumentOutOfRangeException>(() => konto.Wyplata(-10));
+    }
 }
