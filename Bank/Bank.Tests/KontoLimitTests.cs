@@ -96,4 +96,11 @@ public class KontoLimitTests
 
         Assert.IsTrue(konto.Zablokowane);
     }
+
+    [TestMethod]
+    public void Wyplata_Przekroczenie_Limitu_Wyrzuca_Wyjatek()
+    {
+        var konto = new KontoLimit("Piotr Nowak", 50, 100);
+        Assert.Throws<InvalidOperationException>(() => konto.Wyplata(200));
+    }
 }
