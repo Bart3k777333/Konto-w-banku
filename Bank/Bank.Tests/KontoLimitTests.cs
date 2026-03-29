@@ -103,4 +103,14 @@ public class KontoLimitTests
         var konto = new KontoLimit("Piotr Nowak", 50, 100);
         Assert.Throws<InvalidOperationException>(() => konto.Wyplata(200));
     }
+
+    [TestMethod]
+    public void Wyplata_Gdy_Limit_Juz_Wykorzystany_WyrzucaWyjatek()
+    {
+        var konto = new KontoLimit("Piotr Nowak", 50, 100);
+        konto.Wyplata(100);
+        konto.Wplata(50);
+
+        Assert.Throws<InvalidOperationException>(() => konto.Wyplata(10));
+    }
 }
